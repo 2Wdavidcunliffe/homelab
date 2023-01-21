@@ -1,0 +1,13 @@
+[k8s-cluster]
+k8s-control-plane ansible_host=192.168.189.99
+k8s-worker-1 ansible_host=192.168.189.176
+k8s-worker-2 ansible_host=192.168.189.103
+
+[k8s-control-plane]
+k8s-control-plane ansible_host=192.168.189.99
+
+[k8s-workers1]
+k8s-worker-1 ansible_host=192.168.189.176
+
+[k8s-workers2]
+k8s-worker-2 ansible_host=192.168.189.103
