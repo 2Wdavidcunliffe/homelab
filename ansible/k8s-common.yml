@@ -97,17 +97,6 @@
       register: containerd_config
       become: yes
   
-      #    # Set containerd configuration file
-      #    - name: Set containerd configuration file
-      #      lineinfile:
-      #        path: /etc/containerd/config.toml
-      #        regexp: "{{ item.regexp }}"
-      #        line: "{{ item.line }}"
-      #      with_items:
-      #        - { regexp: '^#.*\(systemd_cgroup =\).*', line: '\1 true' }
-      #        - { regexp: '^#.*\(cgroup =\).*', line: '\1 "/systemd/system.slice"' }
-      #      become: yes
-  
     # Disable swap
     - name: Disable swap
       command: swapoff -a
@@ -175,26 +164,3 @@
         enabled: yes
       become: yes
   
-    # If the node is a master node then initialize the cluster
-    - name: Initialize the cluster
-      command: kubeadm init --pod-network-cidr=10.0.0.0/16 --kubernetes-version={{ k8s_version }}
-      register: kubeadm_init
-      #when: groups['k8s-control-plane'] | intersect(groups['k8s-cluster']) | length > 0
-    
-    # Copy the kubernetes config to user
-    - name: Copy kubernetes config to user
-      shell: |
-              mkdir -p $HOME/.kube
-              cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-              chown $(id -u):$(id -g) $HOME/.kube/config
-      become: yes
-
-    # # If the node is a master node then apply the flannel network
-    # - name: Apply the flannel network
-    #   command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-    #   when: groups['k8s-control-plane'] | intersect(groups['k8s-cluster']) | length > 0
-  
-     # If the node is a master node then apply the Calico network and wait for the pods to be ready
-    - name: Apply the Calico network and wait for the pods to be ready
-      shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml && kubectl wait --for=condition=Ready pod -l k8s-app=calico-node -n kube-system --timeout=120s
-      #when: groups['k8s-control-plane'] | intersect(groups['k8s-cluster']) | length > 0
