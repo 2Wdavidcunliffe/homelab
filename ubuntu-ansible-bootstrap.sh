@@ -9,4 +9,4 @@ sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt-get install -y ansible
 
 # Run the Ansible playbook k8s-common.yml:
-ansible-playbook k8s-common.yml -i ./ansible/hosts
+ansible-playbook ./ansible/k8s-common.yml -i ./ansible/hosts
