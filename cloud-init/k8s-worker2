@@ -4,7 +4,7 @@ autoinstall:
 
   ssh:
     install-server: true
-    allow-pw: false      
+    allow-pw: true      
 
   late-commands:
     # randomly generate the hostname & show the ip at boot
@@ -14,7 +14,7 @@ autoinstall:
     # use 100% of the storage
     - curtin in-target --target=/target -- lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
     - curtin in-target --target=/target -- resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
-        # add the other k8s nodes to the hosts file
+    # add the other k8s nodes to the hosts file
     - echo "192.168.189.99    k8s-control-plane.lan" >> /target/etc/hosts
     - echo "192.168.189.176   k8s-worker1.lan" >> /target/etc/hosts
     - echo "192.168.189.103   k8s-worker2.lan" >> /target/etc/hosts
@@ -22,7 +22,8 @@ autoinstall:
   user-data:
     disable_root: true
     timezone: America/Chicago
-    package_upgrade: false
+    package_upgrade: true
+    ssh_pwauth: true # allow password based ssh login
     users:
         # password is "ubuntu" - created with `docker run -it --rm alpine mkpasswd --method=SHA-512`
       - name: ubuntu

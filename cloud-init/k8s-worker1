@@ -4,7 +4,7 @@ autoinstall:
 
   ssh:
     install-server: true
-    allow-pw: false      
+    allow-pw: true      
 
   late-commands:
     # randomly generate the hostname & show the ip at boot
@@ -22,7 +22,8 @@ autoinstall:
   user-data:
     disable_root: true
     timezone: America/Chicago
-    package_upgrade: false
+    package_upgrade: true
+    ssh_pwauth: true # allow password based ssh login
     users:
         # password is "ubuntu" - created with `docker run -it --rm alpine mkpasswd --method=SHA-512`
       - name: ubuntu

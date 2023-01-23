@@ -4,9 +4,11 @@
 # repository.
 
 # Install Ansible:
-sudo apt-get update && sudo apt-get install -y software-properties-common  python3-pip python3 neovim
+sudo apt-get update && sudo apt-get install -y software-properties-common python3-pip python3 sshpass neovim
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt-get install -y ansible
 
+ssh-keyscan -t ecdsa,ed25519,rsa -f ./ansible/inventory/lab/keyscan > ~/.ssh/known_hosts
+
 # Run the Ansible playbook k8s-common.yml:
-ansible-playbook ./ansible/k8s-common.yml -i ./ansible/hosts
+ansible-playbook ./ansible/k8s-common.yml --ask-pass -i ./ansible/inventory/lab/hosts
