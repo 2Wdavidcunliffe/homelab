@@ -14,6 +14,16 @@ ansible-playbook ./ansible/k8s-master.yml --ask-pass -i ./ansible/inventory/lab/
 
 ```
 
+## Add the kube configs to the user account
+
+```bash
+rm -rf $HOME/.kube
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+
 ## Reset cluster for testing
 
 Login to root and run the following commands:
