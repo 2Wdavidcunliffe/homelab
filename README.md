@@ -11,6 +11,7 @@ git clone https://github.com/2wdavidcunliffe/homelab.git
 cd homelab
 ./ubuntu-ansible-bootstrap.sh
 ansible-playbook ./ansible/k8s-master.yml --ask-pass -i ./ansible/inventory/lab/hosts
+
 ```
 
 ## Reset cluster for testing
@@ -29,6 +30,7 @@ iptables -tnat --flush
 systemctl start kubelet
 systemctl start containerd
 rm -rf $HOME/.kube
+
 ```
 
 ## TODO
